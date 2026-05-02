@@ -5,27 +5,35 @@ export default {
     extend: {
       colors: {
         app: {
-          cream: '#f8f4ea',
-          sand: '#efe3cc',
-          charcoal: '#203135',
-          teal: '#3d7b80',
-          mint: '#97c8a8',
-          coral: '#ea866f',
-          gold: '#d9ae5f'
+          background: '#0F172A',
+          surface: '#111827',
+          surfaceLight: '#1E293B',
+          primary: '#14B8A6',
+          primaryHover: '#0D9488',
+          text: '#F8FAFC',
+          muted: '#94A3B8',
+          border: '#334155',
+          success: '#22C55E',
+          warning: '#F59E0B',
+          danger: '#EF4444'
         }
       },
+
       boxShadow: {
-        soft: '0 18px 48px rgba(32, 49, 53, 0.08)'
+        soft: '0 18px 48px rgba(0, 0, 0, 0.25)'
       },
+
       fontFamily: {
         display: ['"Space Grotesk"', 'sans-serif'],
         body: ['"Instrument Sans"', 'sans-serif']
       },
+
       backgroundImage: {
         grain:
-          'radial-gradient(circle at 1px 1px, rgba(32, 49, 53, 0.08) 1px, transparent 0)'
+          'radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.04) 1px, transparent 0)'
       }
     }
   },
+
   plugins: []
 };

@@ -6,11 +6,8 @@
 
 @layer base {
   :root {
-    color: #203135;
-    background:
-      radial-gradient(circle at top left, rgba(151, 200, 168, 0.45), transparent 28%),
-      radial-gradient(circle at right, rgba(234, 134, 111, 0.18), transparent 34%),
-      #f8f4ea;
+    color: #F8FAFC;
+    background: #0F172A;
   }
 
   * {
@@ -18,12 +15,9 @@
   }
 
   body {
-    @apply min-h-screen font-body text-app-charcoal antialiased;
-    background-image:
-      radial-gradient(circle at 1px 1px, rgba(32, 49, 53, 0.04) 1px, transparent 0),
-      radial-gradient(circle at top left, rgba(151, 200, 168, 0.42), transparent 28%),
-      radial-gradient(circle at right, rgba(234, 134, 111, 0.14), transparent 32%);
-    background-size: 20px 20px, auto, auto;
+    @apply min-h-screen font-body antialiased;
+    background-color: #0F172A;
+    color: #F8FAFC;
   }
 
   button,
@@ -36,14 +30,26 @@
 
 @layer components {
   .app-panel {
-    @apply rounded-[28px] border border-white/70 bg-white/85 shadow-soft backdrop-blur;
+    background: #111827;
+    border: 1px solid #334155;
+    border-radius: 28px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
   }
 
   .field {
-    @apply w-full rounded-2xl border border-app-sand bg-white px-4 py-3 text-sm text-app-charcoal outline-none transition focus:border-app-teal focus:ring-2 focus:ring-app-teal/20;
+    @apply w-full rounded-2xl px-4 py-3 text-sm outline-none transition;
+    background: #1E293B;
+    border: 1px solid #334155;
+    color: #F8FAFC;
+  }
+
+  .field:focus {
+    border-color: #14B8A6;
+    box-shadow: 0 0 0 2px rgba(20,184,166,0.2);
   }
 
   .label {
-    @apply mb-2 block text-xs font-semibold uppercase tracking-[0.18em] text-app-charcoal/65;
+    @apply mb-2 block text-xs font-semibold uppercase tracking-[0.18em];
+    color: #94A3B8;
   }
 }
