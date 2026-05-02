@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color: #203135;
+    background:
+      radial-gradient(circle at top left, rgba(151, 200, 168, 0.45), transparent 28%),
+      radial-gradient(circle at right, rgba(234, 134, 111, 0.18), transparent 34%),
+      #f8f4ea;
+  }
+
+  * {
+    @apply border-transparent;
+  }
+
+  body {
+    @apply min-h-screen font-body text-app-charcoal antialiased;
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(32, 49, 53, 0.04) 1px, transparent 0),
+      radial-gradient(circle at top left, rgba(151, 200, 168, 0.42), transparent 28%),
+      radial-gradient(circle at right, rgba(234, 134, 111, 0.14), transparent 32%);
+    background-size: 20px 20px, auto, auto;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    @apply font-body;
+  }
+}
+
+@layer components {
+  .app-panel {
+    @apply rounded-[28px] border border-white/70 bg-white/85 shadow-soft backdrop-blur;
+  }
+
+  .field {
+    @apply w-full rounded-2xl border border-app-sand bg-white px-4 py-3 text-sm text-app-charcoal outline-none transition focus:border-app-teal focus:ring-2 focus:ring-app-teal/20;
+  }
+
+  .label {
+    @apply mb-2 block text-xs font-semibold uppercase tracking-[0.18em] text-app-charcoal/65;
+  }
+}
