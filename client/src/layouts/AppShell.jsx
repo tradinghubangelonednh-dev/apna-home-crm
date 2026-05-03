@@ -5,6 +5,7 @@ import {
   Home,
   LogOut,
   Menu,
+  PieChart,
   RefreshCcw,
   Repeat,
   ShieldCheck,
@@ -19,6 +20,10 @@ const navigation = [
   { id: 'expenses', label: 'Expenses', icon: CircleDollarSign },
   { id: 'settlements', label: 'Settlements', icon: RefreshCcw },
   { id: 'recurring', label: 'Recurring', icon: Repeat },
+
+  // NEW ANALYTICS MENU
+  { id: 'analytics', label: 'Analytics', icon: PieChart },
+
   { id: 'notifications', label: 'Notifications', icon: Bell },
   { id: 'members', label: 'Members', icon: Users },
   { id: 'audit', label: 'Audit', icon: ShieldCheck, adminOnly: true }
@@ -46,10 +51,11 @@ export function AppShell({
   return (
     <div className="min-h-screen flex flex-col">
 
-      {/* TOP BAR (UNCHANGED DARK) */}
-      <div className="sticky top-0 z-50 flex items-center justify-between px-4 py-3
-        bg-[#0B1220] border-b border-white/5 text-white">
-
+      {/* TOP BAR */}
+      <div
+        className="sticky top-0 z-50 flex items-center justify-between px-4 py-3
+        bg-[#0B1220] border-b border-white/5 text-white"
+      >
         <h1 className="font-bold text-lg tracking-wide">
           Household
         </h1>
@@ -70,7 +76,7 @@ export function AppShell({
         />
       )}
 
-      {/* SIDEBAR (UNCHANGED DARK) */}
+      {/* SIDEBAR */}
       <aside
         className={`fixed left-0 top-0 z-50 h-full w-72
         bg-[#0B1220] border-r border-white/5
@@ -119,6 +125,7 @@ export function AppShell({
                 }`}
               >
                 <Icon className="h-4 w-4" />
+
                 {item.label}
 
                 {item.id === 'notifications' && unreadCount ? (
@@ -144,7 +151,7 @@ export function AppShell({
         </div>
       </aside>
 
-      {/* MAIN CONTENT AREA (🔥 THIS IS THE FIX) */}
+      {/* MAIN CONTENT */}
       <main className="flex-1 bg-[#F9FAFB] text-[#111827] p-4 ml-0 md:ml-72">
         {children}
       </main>

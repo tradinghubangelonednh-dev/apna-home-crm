@@ -13,6 +13,9 @@ import { NotificationsPanel } from '../components/notifications/NotificationsPan
 import { MembersPanel } from '../components/household/MembersPanel';
 import { AuditLogPanel } from '../components/household/AuditLogPanel';
 
+// NEW IMPORT
+import { AnalyticsPage } from './AnalyticsPage';
+
 const initialFilters = {
   search: '',
   category: '',
@@ -163,12 +166,15 @@ export function DashboardPage() {
 
   async function runAction(action, successMessage) {
     setBusy(true);
+
     try {
       const result = await action();
       await refreshAll();
+
       if (successMessage) {
         setNotice('success', successMessage);
       }
+
       return result;
     } catch (error) {
       setNotice('error', error.message);
@@ -178,8 +184,12 @@ export function DashboardPage() {
     }
   }
 
-  const members = household?.members || dashboard?.members || [];
-  const unreadCount = dashboard?.summary?.unreadNotifications || notifications.filter((item) => !item.readAt).length;
+  const members =
+    household?.members || dashboard?.members || [];
+
+  const unreadCount =
+    dashboard?.summary?.unreadNotifications ||
+    notifications.filter((item) => !item.readAt).length;
 
   function prepareSuggestion(suggestion, moveToSettlements = false) {
     setPreparedSuggestion(
@@ -205,7 +215,10 @@ export function DashboardPage() {
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-app-charcoal/50">
             Loading
           </p>
-          <h2 className="mt-3 font-display text-3xl">Preparing your household dashboard...</h2>
+
+          <h2 className="mt-3 font-display text-3xl">
+            Preparing your household dashboard...
+          </h2>
         </div>
       </div>
     );
@@ -222,7 +235,9 @@ export function DashboardPage() {
       {feedback ? (
         <div
           className={`app-panel px-5 py-4 text-sm ${
-            feedback.type === 'error' ? 'border-app-coral/40 bg-app-coral/10 text-app-coral' : 'border-app-mint/40 bg-app-mint/12 text-app-teal'
+            feedback.type === 'error'
+              ? 'border-app-coral/40 bg-app-coral/10 text-app-coral'
+              : 'border-app-mint/40 bg-app-mint/12 text-app-teal'
           }`}
         >
           {feedback.message}
@@ -233,9 +248,17 @@ export function DashboardPage() {
         <OverviewSection
           dashboard={dashboard}
           onExportCsv={() =>
-            downloadFile(`/export/expenses.csv${buildQuery(filters)}`, token, 'apna-home-expenses.csv')
-              .then(() => setNotice('success', 'CSV export downloaded'))
-              .catch((error) => setNotice('error', error.message))
+            downloadFile(
+              `/export/expenses.csv${buildQuery(filters)}`,
+              token,
+              'apna-home-expenses.csv'
+            )
+              .then(() =>
+                setNotice('success', 'CSV export downloaded')
+              )
+              .catch((error) =>
+                setNotice('error', error.message)
+              )
           }
           onExportPdf={() =>
             downloadFile(
@@ -246,8 +269,12 @@ export function DashboardPage() {
               token,
               'apna-home-dashboard.pdf'
             )
-              .then(() => setNotice('success', 'PDF export downloaded'))
-              .catch((error) => setNotice('error', error.message))
+              .then(() =>
+                setNotice('success', 'PDF export downloaded')
+              )
+              .catch((error) =>
+                setNotice('error', error.message)
+              )
           }
           onMonthChange={setSelectedMonth}
           onPrepareSettlement={(suggestion) => {
@@ -263,17 +290,36 @@ export function DashboardPage() {
           expenses={expenses}
           filters={filters}
           members={members}
-          onCreateExpense={(payload) => runAction(() => apiRequest('/expenses', { method: 'POST', token, body: payload }), 'Expense added')}
+          onCreateExpense={(payload) =>
+            runAction(
+              () =>
+                apiRequest('/expenses', {
+                  method: 'POST',
+                  token,
+                  body: payload
+                }),
+              'Expense added'
+            )
+          }
           onDeleteExpense={(expenseId) =>
             runAction(
-              () => apiRequest(`/expenses/${expenseId}`, { method: 'DELETE', token }),
+              () =>
+                apiRequest(`/expenses/${expenseId}`, {
+                  method: 'DELETE',
+                  token
+                }),
               'Expense deleted'
             )
           }
           onFiltersChange={setFilters}
           onUpdateExpense={(expenseId, payload) =>
             runAction(
-              () => apiRequest(`/expenses/${expenseId}`, { method: 'PUT', token, body: payload }),
+              () =>
+                apiRequest(`/expenses/${expenseId}`, {
+                  method: 'PUT',
+                  token,
+                  body: payload
+                }),
               'Expense updated'
             )
           }
@@ -286,13 +332,25 @@ export function DashboardPage() {
           members={members}
           onCompleteSettlement={(settlementId) =>
             runAction(
-              () => apiRequest(`/settlements/${settlementId}/complete`, { method: 'PATCH', token }),
+              () =>
+                apiRequest(
+                  `/settlements/${settlementId}/complete`,
+                  {
+                    method: 'PATCH',
+                    token
+                  }
+                ),
               'Settlement marked as completed'
             )
           }
           onCreateSettlement={(payload) =>
             runAction(
-              () => apiRequest('/settlements', { method: 'POST', token, body: payload }),
+              () =>
+                apiRequest('/settlements', {
+                  method: 'POST',
+                  token,
+                  body: payload
+                }),
               'Settlement created'
             ).then((result) => {
               setPreparedSuggestion(null);
@@ -301,12 +359,20 @@ export function DashboardPage() {
           }
           onSendReminder={(settlementId) =>
             runAction(
-              () => apiRequest(`/settlements/${settlementId}/remind`, { method: 'POST', token }),
+              () =>
+                apiRequest(`/settlements/${settlementId}/remind`, {
+                  method: 'POST',
+                  token
+                }),
               'Reminder sent'
             )
           }
-          pendingSuggestions={dashboard.analytics.simplifiedTransactions}
-          onPrepareSuggestion={(suggestion) => prepareSuggestion(suggestion)}
+          pendingSuggestions={
+            dashboard.analytics.simplifiedTransactions
+          }
+          onPrepareSuggestion={(suggestion) =>
+            prepareSuggestion(suggestion)
+          }
           preparedSuggestion={preparedSuggestion}
           settlements={settlements}
         />
@@ -318,22 +384,43 @@ export function DashboardPage() {
           members={members}
           onCreateRecurringExpense={(payload) =>
             runAction(
-              () => apiRequest('/recurring', { method: 'POST', token, body: payload }),
+              () =>
+                apiRequest('/recurring', {
+                  method: 'POST',
+                  token,
+                  body: payload
+                }),
               'Recurring expense created'
             )
           }
           onRunRecurringExpenses={() =>
-            runAction(() => apiRequest('/recurring/run', { method: 'POST', token }), 'Due recurring expenses processed')
+            runAction(
+              () =>
+                apiRequest('/recurring/run', {
+                  method: 'POST',
+                  token
+                }),
+              'Due recurring expenses processed'
+            )
           }
           onToggleRecurringExpense={(recurringId) =>
             runAction(
-              () => apiRequest(`/recurring/${recurringId}/toggle`, { method: 'PATCH', token }),
+              () =>
+                apiRequest(`/recurring/${recurringId}/toggle`, {
+                  method: 'PATCH',
+                  token
+                }),
               'Recurring status updated'
             )
           }
           onUpdateRecurringExpense={(recurringId, payload) =>
             runAction(
-              () => apiRequest(`/recurring/${recurringId}`, { method: 'PUT', token, body: payload }),
+              () =>
+                apiRequest(`/recurring/${recurringId}`, {
+                  method: 'PUT',
+                  token,
+                  body: payload
+                }),
               'Recurring expense updated'
             )
           }
@@ -341,18 +428,34 @@ export function DashboardPage() {
         />
       ) : null}
 
+      {/* NEW ANALYTICS SECTION */}
+      {activeTab === 'analytics' ? (
+        <AnalyticsPage />
+      ) : null}
+
       {activeTab === 'notifications' ? (
         <NotificationsPanel
           notifications={notifications}
           onMarkAllRead={() =>
             runAction(
-              () => apiRequest('/notifications/read-all', { method: 'PATCH', token }),
+              () =>
+                apiRequest('/notifications/read-all', {
+                  method: 'PATCH',
+                  token
+                }),
               'All notifications marked as read'
             )
           }
           onMarkRead={(notificationId) =>
             runAction(
-              () => apiRequest(`/notifications/${notificationId}/read`, { method: 'PATCH', token }),
+              () =>
+                apiRequest(
+                  `/notifications/${notificationId}/read`,
+                  {
+                    method: 'PATCH',
+                    token
+                  }
+                ),
               'Notification marked as read'
             )
           }
@@ -366,20 +469,35 @@ export function DashboardPage() {
           household={household}
           onAddMember={(payload) =>
             runAction(
-              () => apiRequest('/household/members', { method: 'POST', token, body: payload }),
+              () =>
+                apiRequest('/household/members', {
+                  method: 'POST',
+                  token,
+                  body: payload
+                }),
               'Member added'
             )
           }
           onUpdateRole={(memberId, role) =>
             runAction(
-              () => apiRequest(`/household/members/${memberId}/role`, { method: 'PATCH', token, body: { role } }),
+              () =>
+                apiRequest(
+                  `/household/members/${memberId}/role`,
+                  {
+                    method: 'PATCH',
+                    token,
+                    body: { role }
+                  }
+                ),
               'Role updated'
             )
           }
         />
       ) : null}
 
-      {activeTab === 'audit' ? <AuditLogPanel auditLogs={auditLogs} /> : null}
+      {activeTab === 'audit' ? (
+        <AuditLogPanel auditLogs={auditLogs} />
+      ) : null}
     </AppShell>
   );
 }
