@@ -1,4 +1,15 @@
-import { Bell, CircleDollarSign, Home, LogOut, RefreshCcw, Repeat, ShieldCheck, Users } from 'lucide-react';
+import { useState } from 'react';
+import {
+  Bell,
+  CircleDollarSign,
+  Home,
+  LogOut,
+  Menu,
+  RefreshCcw,
+  Repeat,
+  ShieldCheck,
+  Users
+} from 'lucide-react';
 
 import { Button } from '../components/shared/Button';
 import { initials } from '../lib/format';
@@ -21,101 +32,110 @@ export function AppShell({
   unreadCount,
   children
 }) {
-  return (
-    <div className="min-h-screen px-4 py-5 lg:px-6">
-      <div className="mx-auto grid max-w-[1600px] gap-6 xl:grid-cols-[280px_minmax(0,1fr)]">
-        <aside className="app-panel h-fit overflow-hidden p-5">
-          <div className="rounded-[24px] bg-app-charcoal px-5 py-6 text-white">
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-white/60">
-              Apna Home CRM
-            </p>
-            <h1 className="mt-3 font-display text-3xl">Shared household control room</h1>
-            <p className="mt-3 text-sm text-white/72">
-              Split expenses, simplify balances, and keep all five members aligned.
-            </p>
-          </div>
+  const [isOpen, setIsOpen] = useState(false);
 
-          <div className="mt-5 flex items-center gap-3 rounded-[24px] bg-app-sand/45 p-4">
+  const filteredNav = navigation.filter(
+    (item) => !item.adminOnly || user.role === 'admin'
+  );
+
+  const handleTabChange = (id) => {
+    onTabChange(id);
+    setIsOpen(false); // close sidebar on select
+  };
+
+  return (
+    <div className="min-h-screen bg-app-sand">
+      
+      {/* TOP BAR */}
+      <div className="sticky top-0 z-50 flex items-center justify-between bg-white px-4 py-3 shadow-sm">
+        <h1 className="font-display text-xl font-bold">Household</h1>
+
+        <button
+          onClick={() => setIsOpen(true)}
+          className="rounded-xl p-2 hover:bg-gray-100"
+        >
+          <Menu className="h-6 w-6" />
+        </button>
+      </div>
+
+      {/* OVERLAY */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-black/50"
+          onClick={() => setIsOpen(false)}
+        />
+      )}
+
+      {/* SIDEBAR */}
+      <aside
+        className={`fixed left-0 top-0 z-50 h-full w-[75%] max-w-sm transform bg-white p-5 shadow-xl transition-transform duration-300 ${
+          isOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}
+      >
+        {/* HEADER */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
             <div
-              className="flex h-12 w-12 items-center justify-center rounded-2xl font-bold text-white"
+              className="flex h-10 w-10 items-center justify-center rounded-xl font-bold text-white"
               style={{ backgroundColor: user.avatarColor }}
             >
               {initials(user.name)}
             </div>
-            <div className="min-w-0">
-              <p className="truncate font-semibold">{user.name}</p>
-              <p className="truncate text-sm text-app-charcoal/58">
-                {user.role} • {user.email}
-              </p>
-            </div>
-          </div>
-
-          <nav className="mt-5 space-y-2 xl:block">
-            {navigation
-              .filter((item) => !item.adminOnly || user.role === 'admin')
-              .map((item) => {
-                const Icon = item.icon;
-                const isActive = activeTab === item.id;
-
-                return (
-                  <button
-                    className={`flex w-full items-center justify-between rounded-2xl px-4 py-3 text-left text-sm font-semibold transition ${
-                      isActive
-                        ? 'bg-app-charcoal text-white'
-                        : 'bg-transparent text-app-charcoal hover:bg-app-charcoal/5'
-                    }`}
-                    key={item.id}
-                    onClick={() => onTabChange(item.id)}
-                    type="button"
-                  >
-                    <span className="flex items-center gap-3">
-                      <Icon className="h-4 w-4" />
-                      {item.label}
-                    </span>
-                    {item.id === 'notifications' && unreadCount ? (
-                      <span className="rounded-full bg-white/15 px-2 py-0.5 text-xs">
-                        {unreadCount}
-                      </span>
-                    ) : null}
-                  </button>
-                );
-              })}
-          </nav>
-
-          <Button className="mt-6 w-full" variant="secondary" onClick={onLogout}>
-            <LogOut className="mr-2 h-4 w-4" />
-            Log out
-          </Button>
-        </aside>
-
-        <main className="space-y-6">
-          <div className="app-panel flex flex-col gap-3 px-5 py-4 md:flex-row md:items-center md:justify-between">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-app-charcoal/55">
-                Live household workspace
-              </p>
-              <p className="mt-1 text-sm text-app-charcoal/62">
-                Changes to expenses and settlements refresh in real time across the household.
-              </p>
-            </div>
-            <div className="flex flex-wrap gap-2 xl:hidden">
-              {navigation
-                .filter((item) => !item.adminOnly || user.role === 'admin')
-                .map((item) => (
-                  <Button
-                    key={item.id}
-                    size="sm"
-                    variant={item.id === activeTab ? 'primary' : 'ghost'}
-                    onClick={() => onTabChange(item.id)}
-                  >
-                    {item.label}
-                  </Button>
-                ))}
+              <p className="font-semibold">{user.name}</p>
+              <p className="text-xs text-gray-500">{user.role}</p>
             </div>
           </div>
-          {children}
-        </main>
-      </div>
+
+          <button onClick={() => setIsOpen(false)} className="text-xl">
+            ✕
+          </button>
+        </div>
+
+        {/* NAVIGATION */}
+        <nav className="mt-6 space-y-2">
+          {filteredNav.map((item) => {
+            const Icon = item.icon;
+            const isActive = activeTab === item.id;
+
+            return (
+              <button
+                key={item.id}
+                onClick={() => handleTabChange(item.id)}
+                className={`flex w-full items-center gap-3 rounded-xl px-4 py-3 text-left text-sm font-medium transition ${
+                  isActive
+                    ? 'bg-black text-white'
+                    : 'hover:bg-gray-100 text-gray-700'
+                }`}
+              >
+                <Icon className="h-4 w-4" />
+                {item.label}
+
+                {item.id === 'notifications' && unreadCount ? (
+                  <span className="ml-auto rounded-full bg-red-500 px-2 py-0.5 text-xs text-white">
+                    {unreadCount}
+                  </span>
+                ) : null}
+              </button>
+            );
+          })}
+        </nav>
+
+        {/* LOGOUT */}
+        <div className="absolute bottom-5 left-5 right-5">
+          <Button
+            className="w-full"
+            variant="secondary"
+            onClick={onLogout}
+          >
+            <LogOut className="mr-2 h-4 w-4" />
+            Logout
+          </Button>
+        </div>
+      </aside>
+
+      {/* MAIN CONTENT */}
+      <main className="p-4">{children}</main>
     </div>
   );
 }
