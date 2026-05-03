@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Home, Lock, Users } from 'lucide-react';
 
 import { Button } from '../components/shared/Button';
 
@@ -15,63 +14,16 @@ export function AuthPage({ onLogin, onSignup, busy, error }) {
 
   return (
     <div className="min-h-screen bg-app-background px-4 py-6 lg:px-6">
-      <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[1.05fr_0.95fr]">
-        
-        {/* LEFT SIDE */}
-        <section className="app-panel overflow-hidden p-8 lg:p-10">
-          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-app-muted">
-            APNA HOME CRM
-          </p>
-
-          <h1 className="mt-5 max-w-xl font-display text-5xl leading-tight text-app-text">
-            Shared expense management that actually feels calm.
-          </h1>
-
-          <p className="mt-4 max-w-2xl text-base text-app-muted">
-            A modern household expense manager inspired by Splitwise with real-time balances, recurring bills, notifications, exports, and premium analytics.
-          </p>
-
-          <div className="mt-8 grid gap-4 md:grid-cols-3">
-            {[
-              {
-                icon: Users,
-                title: 'Single household',
-                description: 'One group, five members with admin controls.'
-              },
-              {
-                icon: Home,
-                title: 'Real-time balances',
-                description: 'Instant balance refresh after every expense.'
-              },
-              {
-                icon: Lock,
-                title: 'Secure by default',
-                description: 'JWT auth, protected APIs, and encrypted passwords.'
-              }
-            ].map((item) => (
-              <div
-                className="rounded-[24px] border border-app-border bg-app-surfaceLight p-5 transition hover:border-app-primary"
-                key={item.title}
-              >
-                <item.icon className="h-5 w-5 text-app-primary" />
-
-                <h3 className="mt-3 text-lg font-semibold text-app-text">
-                  {item.title}
-                </h3>
-
-                <p className="mt-2 text-sm leading-6 text-app-muted">
-                  {item.description}
-                </p>
-              </div>
-            ))}
+      <div className="mx-auto flex min-h-[calc(100vh-3rem)] max-w-xl items-center justify-center">
+        <section className="app-panel w-full p-8 lg:p-10">
+          <div className="text-center">
+            <p className="text-sm font-extrabold uppercase tracking-[0.28em] text-app-primary">
+              APNA HOME CRM
+            </p>
           </div>
-        </section>
-
-        {/* RIGHT SIDE */}
-        <section className="app-panel p-8 lg:p-10">
 
           {/* LOGIN / SIGNUP SWITCH */}
-          <div className="flex rounded-2xl border border-app-border bg-app-surface p-1">
+          <div className="mt-8 flex rounded-2xl border border-app-border bg-app-surface p-1">
             {['login', 'signup'].map((value) => (
               <button
                 key={value}
@@ -193,11 +145,6 @@ export function AuthPage({ onLogin, onSignup, busy, error }) {
                 : 'Create account'}
             </Button>
           </form>
-
-          <p className="mt-6 text-sm leading-7 text-app-muted">
-            The first signup becomes the admin and creates the household.
-            Additional members can join until the five-member limit is reached.
-          </p>
         </section>
       </div>
     </div>
