@@ -2,13 +2,13 @@ import clsx from 'clsx';
 
 const variants = {
   primary:
-    'bg-app-primary text-white hover:bg-app-primaryHover shadow-lg shadow-teal-500/20 hover:shadow-xl hover:shadow-teal-500/30',
+    'bg-teal-500 text-white hover:bg-teal-600 shadow-lg shadow-teal-500/20 hover:shadow-xl hover:shadow-teal-500/30',
 
   secondary:
-    'bg-app-surfaceLight text-app-text border border-app-border hover:border-app-primary hover:bg-app-surface',
+    'bg-gray-100 text-[#111827] border border-gray-300 hover:border-teal-500 hover:bg-gray-50',
 
   ghost:
-    'bg-transparent text-app-muted hover:bg-app-surface hover:text-app-text',
+    'bg-transparent text-[#6B7280] hover:bg-gray-100 hover:text-[#111827]',
 
   danger:
     'bg-red-500 text-white hover:bg-red-600 shadow-lg shadow-red-500/20'
