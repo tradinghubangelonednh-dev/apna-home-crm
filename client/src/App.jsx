@@ -21,19 +21,30 @@ export default function App() {
     }
   }
 
+  /* =========================
+     LOADING SCREEN (FIXED)
+  ========================= */
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center">
+      <div className="flex min-h-screen items-center justify-center bg-gray-50">
         <div className="app-panel px-8 py-6 text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-app-charcoal/50">
+
+          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-gray-500">
             Starting up
           </p>
-          <h2 className="mt-3 font-display text-3xl">Checking your session...</h2>
+
+          <h2 className="mt-3 text-3xl font-semibold text-gray-900">
+            Checking your session...
+          </h2>
+
         </div>
       </div>
     );
   }
 
+  /* =========================
+     AUTH SCREEN
+  ========================= */
   if (!isAuthenticated) {
     return (
       <AuthPage
@@ -45,5 +56,8 @@ export default function App() {
     );
   }
 
+  /* =========================
+     DASHBOARD
+  ========================= */
   return <DashboardPage />;
 }
