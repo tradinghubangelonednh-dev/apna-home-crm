@@ -1,7 +1,5 @@
 import { ArrowLeftRight, BellDot, IndianRupee, Wallet } from 'lucide-react';
 
-import { CategoryBreakdownChart } from './CategoryBreakdownChart';
-import { MonthlyTrendChart } from './MonthlyTrendChart';
 import { Button } from '../shared/Button';
 import { Card } from '../shared/Card';
 import { EmptyState } from '../shared/EmptyState';
@@ -94,12 +92,6 @@ export function OverviewSection({
 
       </div>
 
-      {/* CHARTS */}
-      <div className="grid gap-6 xl:grid-cols-[1.2fr_0.8fr]">
-        <MonthlyTrendChart data={analytics.monthlyTrend} />
-        <CategoryBreakdownChart data={analytics.categoryBreakdown} />
-      </div>
-
       {/* CONTRIBUTIONS + DEBT */}
       <div className="grid gap-6 xl:grid-cols-[1.1fr_0.9fr]">
 
@@ -160,7 +152,6 @@ export function OverviewSection({
                   </div>
 
                   <div>
-                    <p className="text-gray-400">Net</p>
                     <p className={`font-semibold ${entry.difference >= 0 ? 'text-emerald-600' : 'text-red-500'}`}>
                       {formatCurrency(entry.difference)}
                     </p>
@@ -235,7 +226,7 @@ export function OverviewSection({
 
       </div>
 
-      {/* RECENT ACTIVITY */}
+      {/* OUTSTANDING + RECENT */}
       <div className="grid gap-6 xl:grid-cols-[0.9fr_1.1fr]">
 
         <Card className="bg-white border border-gray-200 rounded-2xl shadow-sm">
