@@ -46,12 +46,12 @@ export function AuthPage({ onLogin, onSignup, busy, error }) {
           </div>
 
           {/* TITLE */}
-          <div className="mt-8">
+          <div className="mt-8 text-center">
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-app-primary">
               {mode === 'login' ? 'WELCOME BACK' : 'CREATE ACCOUNT'}
             </p>
 
-            <h2 className="mt-3 font-display text-3xl text-app-text">
+            <h2 className="mt-3 font-display text-3xl font-bold leading-tight text-white">
               {mode === 'login'
                 ? 'Log in to your household'
                 : 'Join the home ledger.'}
@@ -142,7 +142,7 @@ export function AuthPage({ onLogin, onSignup, busy, error }) {
               </div>
             ) : null}
 
-            <div className="pt-4">
+            <div className="pt-5">
               <Button className="w-full" disabled={busy} type="submit">
                 {busy
                   ? 'Please wait...'
