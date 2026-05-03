@@ -8,40 +8,95 @@
    BASE THEME (LIGHT UI FIXED)
 ========================= */
 @layer base {
+
   :root {
     color: #111827;
     background: #F9FAFB;
+  }
+
+  html {
+    background: #F9FAFB;
+    color: #111827;
   }
 
   body {
     @apply min-h-screen font-body antialiased;
     background: #F9FAFB;
     color: #111827;
+    opacity: 1;
+  }
+
+  /* GLOBAL TEXT VISIBILITY FIX */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: #111827;
+    opacity: 1;
+  }
+
+  p,
+  span,
+  div,
+  label,
+  small {
+    opacity: 1;
+  }
+
+  p {
+    color: #6B7280;
+  }
+
+  label {
+    color: #9CA3AF;
   }
 
   * {
     border-color: #E5E7EB;
   }
 
+  /* INPUTS */
   button,
   input,
   select,
   textarea {
     @apply font-body;
+    opacity: 1;
+  }
+
+  input,
+  textarea,
+  select {
+    color: #111827;
+    background: #FFFFFF;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: #9CA3AF;
+    opacity: 1;
+  }
+
+  /* REMOVE BAD VISIBILITY EFFECTS */
+  * {
+    filter: none;
   }
 }
 
 /* =========================
-   PREMIUM COMPONENT SYSTEM (LIGHT)
+   PREMIUM COMPONENT SYSTEM
 ========================= */
 @layer components {
 
-  /* MAIN CARD (WHITE FINTECH STYLE) */
+  /* MAIN CARD */
   .app-panel {
     background: #FFFFFF;
     border: 1px solid #E5E7EB;
     border-radius: 16px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    color: #111827;
   }
 
   /* INPUT FIELD */
@@ -50,6 +105,7 @@
     background: #FFFFFF;
     border: 1px solid #E5E7EB;
     color: #111827;
+    opacity: 1;
   }
 
   .field:focus {
@@ -57,10 +113,16 @@
     box-shadow: 0 0 0 2px rgba(59,130,246,0.15);
   }
 
+  .field::placeholder {
+    color: #9CA3AF;
+    opacity: 1;
+  }
+
   /* LABEL */
   .label {
     @apply mb-2 block text-xs font-semibold uppercase tracking-[0.18em];
     color: #6B7280;
+    opacity: 1;
   }
 
   /* SIDEBAR ACTIVE ITEM */
@@ -68,15 +130,29 @@
     background: rgba(59,130,246,0.08);
     border-left: 3px solid #3B82F6;
     color: #111827;
+    opacity: 1;
   }
 
   /* SIDEBAR ITEM */
   .sidebar-item {
     @apply flex items-center gap-3 px-3 py-2 rounded-lg transition;
     color: #6B7280;
+    opacity: 1;
   }
 
   .sidebar-item:hover {
+    background: #F3F4F6;
+    color: #111827;
+  }
+
+  /* PRIMARY BUTTON */
+  .btn-primary {
+    background: #14B8A6;
+    color: #FFFFFF;
+  }
+
+  /* SECONDARY BUTTON */
+  .btn-secondary {
     background: #F3F4F6;
     color: #111827;
   }
