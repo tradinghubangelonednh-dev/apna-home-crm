@@ -23,15 +23,15 @@ export function OverviewSection({
       <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
 
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#374151]">
             Household Snapshot
           </p>
 
-          <h2 className="mt-2 text-3xl font-bold text-gray-900">
+          <h2 className="mt-2 text-3xl font-bold text-[#111827]">
             Split smarter, settle less.
           </h2>
 
-          <p className="mt-2 text-sm text-gray-500 max-w-2xl">
+          <p className="mt-2 text-sm text-[#6B7280] max-w-2xl">
             Real-time balances, monthly insights, and debt simplification.
           </p>
         </div>
@@ -39,17 +39,24 @@ export function OverviewSection({
         <div className="flex flex-col gap-3 sm:flex-row">
 
           <input
-            className="px-4 py-3 rounded-xl border border-gray-200 bg-white text-gray-900"
+            className="px-4 py-3 rounded-xl border border-gray-200 bg-white text-[#111827] font-medium"
             type="month"
             value={selectedMonth}
             onChange={(e) => onMonthChange(e.target.value)}
           />
 
-          <Button variant="secondary" className="bg-gray-100 text-gray-900">
+          <Button
+            variant="secondary"
+            className="bg-gray-100 text-[#111827] font-semibold"
+            onClick={onExportCsv}
+          >
             Export CSV
           </Button>
 
-          <Button className="bg-emerald-500 text-white hover:bg-emerald-600">
+          <Button
+            className="bg-emerald-500 text-white hover:bg-emerald-600 font-semibold"
+            onClick={onExportPdf}
+          >
             Export PDF
           </Button>
 
@@ -99,10 +106,11 @@ export function OverviewSection({
         <Card className="bg-white border border-gray-200 rounded-2xl shadow-sm">
 
           <div className="mb-5">
-            <p className="text-xs font-semibold uppercase tracking-widest text-gray-400">
+            <p className="text-xs font-semibold uppercase tracking-widest text-[#374151]">
               Contributions
             </p>
-            <h3 className="text-xl font-bold text-gray-900">
+
+            <h3 className="text-xl font-bold text-[#111827]">
               Who paid more this month
             </h3>
           </div>
@@ -125,34 +133,51 @@ export function OverviewSection({
                   </div>
 
                   <div>
-                    <p className="font-semibold text-gray-900">
+                    <p className="font-semibold text-[#111827]">
                       {entry.user.name}
                     </p>
-                    <p className="text-sm text-gray-500">
+
+                    <p className="text-sm text-[#6B7280]">
                       {entry.user.role}
                     </p>
                   </div>
 
                 </div>
 
-                <div className="grid grid-cols-3 gap-3 text-sm">
+                <div className="grid grid-cols-3 gap-4 text-sm">
 
                   <div>
-                    <p className="text-gray-400">Paid</p>
-                    <p className="font-semibold text-gray-900">
+                    <p className="text-[#6B7280] font-medium">
+                      Paid
+                    </p>
+
+                    <p className="font-bold text-[#111827] text-base">
                       {formatCurrency(entry.paid)}
                     </p>
                   </div>
 
                   <div>
-                    <p className="text-gray-400">Share</p>
-                    <p className="font-semibold text-gray-900">
+                    <p className="text-[#6B7280] font-medium">
+                      Share
+                    </p>
+
+                    <p className="font-bold text-[#111827] text-base">
                       {formatCurrency(entry.share)}
                     </p>
                   </div>
 
                   <div>
-                    <p className={`font-semibold ${entry.difference >= 0 ? 'text-emerald-600' : 'text-red-500'}`}>
+                    <p className="text-[#6B7280] font-medium">
+                      Balance
+                    </p>
+
+                    <p
+                      className={`font-bold text-base ${
+                        entry.difference >= 0
+                          ? 'text-emerald-600'
+                          : 'text-red-500'
+                      }`}
+                    >
                       {formatCurrency(entry.difference)}
                     </p>
                   </div>
@@ -170,10 +195,11 @@ export function OverviewSection({
         <Card className="bg-white border border-gray-200 rounded-2xl shadow-sm">
 
           <div className="mb-4">
-            <p className="text-xs font-semibold uppercase tracking-widest text-gray-400">
+            <p className="text-xs font-semibold uppercase tracking-widest text-[#374151]">
               Debt Simplification
             </p>
-            <h3 className="text-xl font-bold text-gray-900">
+
+            <h3 className="text-xl font-bold text-[#111827]">
               Fewest payments needed
             </h3>
           </div>
@@ -187,11 +213,11 @@ export function OverviewSection({
                   className="p-4 border border-gray-100 rounded-2xl bg-gray-50"
                 >
 
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm font-medium text-[#6B7280]">
                     Suggested transfer
                   </p>
 
-                  <p className="mt-1 font-semibold text-gray-900">
+                  <p className="mt-1 font-semibold text-[#111827]">
                     {transaction.from.name} pays {transaction.to.name}
                   </p>
 
@@ -203,7 +229,7 @@ export function OverviewSection({
 
                     <Button
                       size="sm"
-                      className="bg-gray-900 text-white"
+                      className="bg-gray-900 text-white font-semibold"
                       onClick={() => onPrepareSettlement(transaction)}
                     >
                       Create Settlement
@@ -231,7 +257,7 @@ export function OverviewSection({
 
         <Card className="bg-white border border-gray-200 rounded-2xl shadow-sm">
 
-          <h3 className="text-xl font-bold text-gray-900 mb-4">
+          <h3 className="text-xl font-bold text-[#111827] mb-4">
             Outstanding Balances
           </h3>
 
@@ -244,15 +270,24 @@ export function OverviewSection({
               >
 
                 <div>
-                  <p className="font-semibold text-gray-900">
+                  <p className="font-semibold text-[#111827]">
                     {entry.user.name}
                   </p>
-                  <p className="text-sm text-gray-500">
-                    {entry.net >= 0 ? 'Should receive' : 'Needs to pay'}
+
+                  <p className="text-sm text-[#6B7280]">
+                    {entry.net >= 0
+                      ? 'Should receive'
+                      : 'Needs to pay'}
                   </p>
                 </div>
 
-                <span className={`font-semibold ${entry.net >= 0 ? 'text-emerald-600' : 'text-red-500'}`}>
+                <span
+                  className={`font-bold text-base ${
+                    entry.net >= 0
+                      ? 'text-emerald-600'
+                      : 'text-red-500'
+                  }`}
+                >
                   {formatCurrency(entry.net)}
                 </span>
 
@@ -265,7 +300,7 @@ export function OverviewSection({
 
         <Card className="bg-white border border-gray-200 rounded-2xl shadow-sm">
 
-          <h3 className="text-xl font-bold text-gray-900 mb-4">
+          <h3 className="text-xl font-bold text-[#111827] mb-4">
             Recent Activity
           </h3>
 
@@ -278,15 +313,15 @@ export function OverviewSection({
                   className="p-4 rounded-xl border border-gray-100 bg-gray-50"
                 >
 
-                  <p className="font-semibold text-gray-900">
+                  <p className="font-semibold text-[#111827]">
                     {expense.title || expense.category}
                   </p>
 
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-[#6B7280]">
                     {expense.paidBy.name} • {formatDate(expense.date)}
                   </p>
 
-                  <p className="mt-2 font-bold text-gray-900">
+                  <p className="mt-2 text-lg font-bold text-[#111827]">
                     {formatCurrency(expense.amount)}
                   </p>
 
