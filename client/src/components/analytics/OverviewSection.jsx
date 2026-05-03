@@ -20,221 +20,300 @@ export function OverviewSection({
 
   return (
     <div className="space-y-6">
+
+      {/* HEADER */}
       <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-app-charcoal/55">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">
             Household Snapshot
           </p>
-          <h2 className="mt-2 font-display text-4xl text-app-charcoal">Split smarter, settle less.</h2>
-          <p className="mt-3 max-w-2xl text-sm text-app-charcoal/62">
-            Real-time balances, monthly insight, and debt simplification for your five-member home.
+
+          <h2 className="mt-2 text-3xl font-bold text-gray-900">
+            Split smarter, settle less.
+          </h2>
+
+          <p className="mt-2 text-sm text-gray-500 max-w-2xl">
+            Real-time balances, monthly insights, and debt simplification.
           </p>
         </div>
+
         <div className="flex flex-col gap-3 sm:flex-row">
+
           <input
-            className="field"
+            className="px-4 py-3 rounded-xl border border-gray-200 bg-white text-gray-900"
             type="month"
             value={selectedMonth}
-            onChange={(event) => onMonthChange(event.target.value)}
+            onChange={(e) => onMonthChange(e.target.value)}
           />
-          <Button variant="secondary" onClick={onExportCsv}>
+
+          <Button variant="secondary" className="bg-gray-100 text-gray-900">
             Export CSV
           </Button>
-          <Button onClick={onExportPdf}>Export PDF</Button>
+
+          <Button className="bg-emerald-500 text-white hover:bg-emerald-600">
+            Export PDF
+          </Button>
+
         </div>
       </div>
 
+      {/* STATS */}
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+
         <StatCard
           icon={IndianRupee}
           label="Monthly Spend"
           value={formatCurrency(summary.totalMonthlyExpenses)}
-          hint="This month’s household total"
+          hint="This month total"
         />
+
         <StatCard
           icon={Wallet}
           label="Outstanding"
           value={formatCurrency(summary.outstandingTotal)}
           tone="alert"
-          hint="Net still owed across members"
+          hint="Money pending"
         />
+
         <StatCard
           icon={ArrowLeftRight}
           label="Pending Settlements"
           value={formatCurrency(summary.pendingSettlementsAmount)}
           tone="positive"
-          hint="Open payment requests"
+          hint="Open payments"
         />
+
         <StatCard
           icon={BellDot}
           label="Unread Alerts"
           value={summary.unreadNotifications}
           tone="neutral"
-          hint="Expense and reminder notifications"
+          hint="Notifications"
         />
+
       </div>
 
+      {/* CHARTS */}
       <div className="grid gap-6 xl:grid-cols-[1.2fr_0.8fr]">
         <MonthlyTrendChart data={analytics.monthlyTrend} />
         <CategoryBreakdownChart data={analytics.categoryBreakdown} />
       </div>
 
+      {/* CONTRIBUTIONS + DEBT */}
       <div className="grid gap-6 xl:grid-cols-[1.1fr_0.9fr]">
-        <Card>
-          <div className="mb-5 flex items-center justify-between">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-app-charcoal/55">
-                Contributions
-              </p>
-              <h3 className="font-display text-2xl">Who paid more this month</h3>
-            </div>
+
+        {/* CONTRIBUTIONS */}
+        <Card className="bg-white border border-gray-200 rounded-2xl shadow-sm">
+
+          <div className="mb-5">
+            <p className="text-xs font-semibold uppercase tracking-widest text-gray-400">
+              Contributions
+            </p>
+            <h3 className="text-xl font-bold text-gray-900">
+              Who paid more this month
+            </h3>
           </div>
+
           <div className="space-y-4">
+
             {summary.perUserContribution.map((entry) => (
               <div
-                className="flex flex-col gap-3 rounded-[22px] border border-app-sand/80 bg-app-sand/30 p-4 md:flex-row md:items-center md:justify-between"
                 key={entry.user._id}
+                className="flex flex-col md:flex-row md:justify-between gap-3 p-4 rounded-2xl border border-gray-100 bg-gray-50"
               >
+
                 <div className="flex items-center gap-3">
+
                   <div
-                    className="flex h-11 w-11 items-center justify-center rounded-2xl text-sm font-bold text-white"
+                    className="w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold"
                     style={{ backgroundColor: entry.user.avatarColor }}
                   >
                     {initials(entry.user.name)}
                   </div>
+
                   <div>
-                    <p className="font-semibold">{entry.user.name}</p>
-                    <p className="text-sm text-app-charcoal/58">{entry.user.role}</p>
+                    <p className="font-semibold text-gray-900">
+                      {entry.user.name}
+                    </p>
+                    <p className="text-sm text-gray-500">
+                      {entry.user.role}
+                    </p>
                   </div>
+
                 </div>
+
                 <div className="grid grid-cols-3 gap-3 text-sm">
+
                   <div>
-                    <p className="text-app-charcoal/50">Paid</p>
-                    <p className="font-semibold">{formatCurrency(entry.paid)}</p>
+                    <p className="text-gray-400">Paid</p>
+                    <p className="font-semibold text-gray-900">
+                      {formatCurrency(entry.paid)}
+                    </p>
                   </div>
+
                   <div>
-                    <p className="text-app-charcoal/50">Share</p>
-                    <p className="font-semibold">{formatCurrency(entry.share)}</p>
+                    <p className="text-gray-400">Share</p>
+                    <p className="font-semibold text-gray-900">
+                      {formatCurrency(entry.share)}
+                    </p>
                   </div>
+
                   <div>
-                    <p className="text-app-charcoal/50">Net</p>
-                    <p className={entry.difference >= 0 ? 'font-semibold text-app-teal' : 'font-semibold text-app-coral'}>
+                    <p className="text-gray-400">Net</p>
+                    <p className={`font-semibold ${entry.difference >= 0 ? 'text-emerald-600' : 'text-red-500'}`}>
                       {formatCurrency(entry.difference)}
                     </p>
                   </div>
+
                 </div>
+
               </div>
             ))}
+
           </div>
+
         </Card>
 
-        <Card>
-          <div className="mb-5">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-app-charcoal/55">
+        {/* DEBT SIMPLIFICATION */}
+        <Card className="bg-white border border-gray-200 rounded-2xl shadow-sm">
+
+          <div className="mb-4">
+            <p className="text-xs font-semibold uppercase tracking-widest text-gray-400">
               Debt Simplification
             </p>
-            <h3 className="font-display text-2xl">Fewest payments needed</h3>
+            <h3 className="text-xl font-bold text-gray-900">
+              Fewest payments needed
+            </h3>
           </div>
+
           {analytics.simplifiedTransactions.length ? (
             <div className="space-y-4">
+
               {analytics.simplifiedTransactions.map((transaction, index) => (
                 <div
-                  className="rounded-[22px] border border-app-sand/80 bg-white p-4"
                   key={`${transaction.from.id}-${transaction.to.id}-${index}`}
+                  className="p-4 border border-gray-100 rounded-2xl bg-gray-50"
                 >
-                  <p className="text-sm text-app-charcoal/60">Suggested transfer</p>
-                  <p className="mt-1 font-semibold text-app-charcoal">
+
+                  <p className="text-sm text-gray-500">
+                    Suggested transfer
+                  </p>
+
+                  <p className="mt-1 font-semibold text-gray-900">
                     {transaction.from.name} pays {transaction.to.name}
                   </p>
+
                   <div className="mt-3 flex items-center justify-between">
-                    <span className="font-display text-2xl text-app-teal">
+
+                    <span className="text-2xl font-bold text-emerald-600">
                       {formatCurrency(transaction.amount)}
                     </span>
+
                     <Button
                       size="sm"
-                      variant="secondary"
+                      className="bg-gray-900 text-white"
                       onClick={() => onPrepareSettlement(transaction)}
                     >
                       Create Settlement
                     </Button>
+
                   </div>
+
                 </div>
               ))}
+
             </div>
           ) : (
             <EmptyState
               title="All clear"
-              description="No simplified payments are needed right now."
+              description="No payments needed right now."
             />
           )}
+
         </Card>
+
       </div>
 
+      {/* RECENT ACTIVITY */}
       <div className="grid gap-6 xl:grid-cols-[0.9fr_1.1fr]">
-        <Card>
-          <div className="mb-4">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-app-charcoal/55">
-              Outstanding Balances
-            </p>
-            <h3 className="font-display text-2xl">Net position by member</h3>
-          </div>
+
+        <Card className="bg-white border border-gray-200 rounded-2xl shadow-sm">
+
+          <h3 className="text-xl font-bold text-gray-900 mb-4">
+            Outstanding Balances
+          </h3>
+
           <div className="space-y-3">
+
             {summary.outstandingBalances.map((entry) => (
               <div
-                className="flex items-center justify-between rounded-[22px] bg-app-sand/30 px-4 py-3"
                 key={entry.user.id}
+                className="flex justify-between p-3 rounded-xl bg-gray-50"
               >
+
                 <div>
-                  <p className="font-semibold">{entry.user.name}</p>
-                  <p className="text-sm text-app-charcoal/55">
+                  <p className="font-semibold text-gray-900">
+                    {entry.user.name}
+                  </p>
+                  <p className="text-sm text-gray-500">
                     {entry.net >= 0 ? 'Should receive' : 'Needs to pay'}
                   </p>
                 </div>
-                <span className={entry.net >= 0 ? 'font-semibold text-app-teal' : 'font-semibold text-app-coral'}>
+
+                <span className={`font-semibold ${entry.net >= 0 ? 'text-emerald-600' : 'text-red-500'}`}>
                   {formatCurrency(entry.net)}
                 </span>
+
               </div>
             ))}
+
           </div>
+
         </Card>
 
-        <Card>
-          <div className="mb-4">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-app-charcoal/55">
-              Recent Activity
-            </p>
-            <h3 className="font-display text-2xl">Latest monthly expenses</h3>
-          </div>
+        <Card className="bg-white border border-gray-200 rounded-2xl shadow-sm">
+
+          <h3 className="text-xl font-bold text-gray-900 mb-4">
+            Recent Activity
+          </h3>
+
           {recentExpenses.length ? (
             <div className="space-y-3">
+
               {recentExpenses.map((expense) => (
                 <div
-                  className="flex flex-col gap-3 rounded-[22px] border border-app-sand/80 p-4 md:flex-row md:items-center md:justify-between"
                   key={expense._id}
+                  className="p-4 rounded-xl border border-gray-100 bg-gray-50"
                 >
-                  <div>
-                    <p className="font-semibold">{expense.title || expense.category}</p>
-                    <p className="text-sm text-app-charcoal/55">
-                      {expense.paidBy.name} paid on {formatDate(expense.date)}
-                    </p>
-                  </div>
-                  <div className="text-right">
-                    <p className="font-display text-2xl text-app-charcoal">
-                      {formatCurrency(expense.amount)}
-                    </p>
-                    <p className="text-sm text-app-charcoal/55">{expense.splitType} split</p>
-                  </div>
+
+                  <p className="font-semibold text-gray-900">
+                    {expense.title || expense.category}
+                  </p>
+
+                  <p className="text-sm text-gray-500">
+                    {expense.paidBy.name} • {formatDate(expense.date)}
+                  </p>
+
+                  <p className="mt-2 font-bold text-gray-900">
+                    {formatCurrency(expense.amount)}
+                  </p>
+
                 </div>
               ))}
+
             </div>
           ) : (
             <EmptyState
               title="No expenses yet"
-              description="Add the first shared bill to start tracking contributions."
+              description="Add your first expense to start tracking."
             />
           )}
+
         </Card>
+
       </div>
+
     </div>
   );
 }

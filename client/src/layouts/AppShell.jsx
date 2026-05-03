@@ -44,11 +44,11 @@ export function AppShell({
   };
 
   return (
-    <div className="min-h-screen bg-[#0B1220] text-white">
+    <div className="min-h-screen flex flex-col">
 
-      {/* TOP BAR */}
+      {/* TOP BAR (UNCHANGED DARK) */}
       <div className="sticky top-0 z-50 flex items-center justify-between px-4 py-3
-        bg-[#0B1220] border-b border-white/5">
+        bg-[#0B1220] border-b border-white/5 text-white">
 
         <h1 className="font-bold text-lg tracking-wide">
           Household
@@ -70,7 +70,7 @@ export function AppShell({
         />
       )}
 
-      {/* SIDEBAR */}
+      {/* SIDEBAR (UNCHANGED DARK) */}
       <aside
         className={`fixed left-0 top-0 z-50 h-full w-72
         bg-[#0B1220] border-r border-white/5
@@ -82,9 +82,7 @@ export function AppShell({
         <div className="flex items-center justify-between p-5 border-b border-white/5">
 
           <div className="flex items-center gap-3">
-            <div
-              className="flex h-10 w-10 items-center justify-center rounded-xl font-bold text-white bg-teal-500"
-            >
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl font-bold text-white bg-teal-500">
               {initials(user.name)}
             </div>
 
@@ -146,8 +144,8 @@ export function AppShell({
         </div>
       </aside>
 
-      {/* MAIN CONTENT */}
-      <main className="p-4">
+      {/* MAIN CONTENT AREA (🔥 THIS IS THE FIX) */}
+      <main className="flex-1 bg-[#F9FAFB] text-[#111827] p-4 ml-0 md:ml-72">
         {children}
       </main>
 
