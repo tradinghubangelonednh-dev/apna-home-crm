@@ -40,21 +40,24 @@ export function AppShell({
 
   const handleTabChange = (id) => {
     onTabChange(id);
-    setIsOpen(false); // close sidebar on select
+    setIsOpen(false);
   };
 
   return (
     <div className="min-h-screen bg-app-sand">
-      
+
       {/* TOP BAR */}
-      <div className="sticky top-0 z-50 flex items-center justify-between bg-white px-4 py-3 shadow-sm">
-        <h1 className="font-display text-xl font-bold">Household</h1>
+      <div className="sticky top-0 z-50 flex items-center justify-between px-4 py-3 shadow-lg bg-gradient-to-r from-[#0b1220] via-[#0f172a] to-[#111c33] text-white">
+
+        <h1 className="font-display text-xl font-bold tracking-wide">
+          Household
+        </h1>
 
         <button
           onClick={() => setIsOpen(true)}
-          className="rounded-xl p-2 hover:bg-gray-100"
+          className="rounded-xl p-2 hover:bg-white/10 transition"
         >
-          <Menu className="h-6 w-6" />
+          <Menu className="h-6 w-6 text-white" />
         </button>
       </div>
 
@@ -68,12 +71,14 @@ export function AppShell({
 
       {/* SIDEBAR */}
       <aside
-        className={`fixed left-0 top-0 z-50 h-full w-[75%] max-w-sm transform bg-white p-5 shadow-xl transition-transform duration-300 ${
+        className={`fixed left-0 top-0 z-50 h-full w-[78%] max-w-sm bg-white p-5 shadow-2xl transition-transform duration-300 ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        {/* HEADER */}
+
+        {/* USER HEADER */}
         <div className="flex items-center justify-between">
+
           <div className="flex items-center gap-3">
             <div
               className="flex h-10 w-10 items-center justify-center rounded-xl font-bold text-white"
@@ -81,19 +86,24 @@ export function AppShell({
             >
               {initials(user.name)}
             </div>
+
             <div>
               <p className="font-semibold">{user.name}</p>
               <p className="text-xs text-gray-500">{user.role}</p>
             </div>
           </div>
 
-          <button onClick={() => setIsOpen(false)} className="text-xl">
+          <button
+            onClick={() => setIsOpen(false)}
+            className="text-2xl text-gray-500 hover:text-black"
+          >
             ✕
           </button>
         </div>
 
         {/* NAVIGATION */}
         <nav className="mt-6 space-y-2">
+
           {filteredNav.map((item) => {
             const Icon = item.icon;
             const isActive = activeTab === item.id;
@@ -104,8 +114,8 @@ export function AppShell({
                 onClick={() => handleTabChange(item.id)}
                 className={`flex w-full items-center gap-3 rounded-xl px-4 py-3 text-left text-sm font-medium transition ${
                   isActive
-                    ? 'bg-black text-white'
-                    : 'hover:bg-gray-100 text-gray-700'
+                    ? 'bg-[#0f172a] text-white'
+                    : 'text-gray-700 hover:bg-gray-100'
                 }`}
               >
                 <Icon className="h-4 w-4" />
@@ -135,7 +145,10 @@ export function AppShell({
       </aside>
 
       {/* MAIN CONTENT */}
-      <main className="p-4">{children}</main>
+      <main className="p-4">
+        {children}
+      </main>
+
     </div>
   );
 }
