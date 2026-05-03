@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Home } from 'lucide-react';
 
 import { Button } from '../components/shared/Button';
 
@@ -17,6 +18,10 @@ export function AuthPage({ onLogin, onSignup, busy, error }) {
       <div className="mx-auto flex min-h-[calc(100vh-3rem)] max-w-xl items-center justify-center">
         <section className="app-panel w-full p-8 lg:p-10">
           <div className="text-center">
+            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-app-primary/10 text-app-primary shadow-lg shadow-app-primary/20">
+              <Home className="h-7 w-7" />
+            </div>
+
             <p className="text-sm font-extrabold uppercase tracking-[0.28em] text-app-primary">
               APNA HOME CRM
             </p>
@@ -46,9 +51,9 @@ export function AuthPage({ onLogin, onSignup, busy, error }) {
               {mode === 'login' ? 'WELCOME BACK' : 'CREATE ACCOUNT'}
             </p>
 
-            <h2 className="mt-3 font-display text-4xl text-app-text">
+            <h2 className="mt-3 font-display text-3xl text-app-text">
               {mode === 'login'
-                ? 'Enter your household.'
+                ? 'Log in to your household'
                 : 'Join the home ledger.'}
             </h2>
           </div>
@@ -137,13 +142,15 @@ export function AuthPage({ onLogin, onSignup, busy, error }) {
               </div>
             ) : null}
 
-            <Button className="w-full" disabled={busy} type="submit">
-              {busy
-                ? 'Please wait...'
-                : mode === 'login'
-                ? 'Login'
-                : 'Create account'}
-            </Button>
+            <div className="pt-4">
+              <Button className="w-full" disabled={busy} type="submit">
+                {busy
+                  ? 'Please wait...'
+                  : mode === 'login'
+                  ? 'Login'
+                  : 'Create account'}
+              </Button>
+            </div>
           </form>
         </section>
       </div>
