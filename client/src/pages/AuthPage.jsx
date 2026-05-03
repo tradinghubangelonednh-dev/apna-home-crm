@@ -51,7 +51,7 @@ export function AuthPage({ onLogin, onSignup, busy, error }) {
               {mode === 'login' ? 'WELCOME BACK' : 'CREATE ACCOUNT'}
             </p>
 
-            <h2 className="mt-3 font-display text-3xl font-bold leading-tight text-white">
+            <h2 className="mt-3 font-display text-3xl font-bold leading-tight text-app-primary">
               {mode === 'login'
                 ? 'Log in to your household'
                 : 'Join the home ledger.'}
