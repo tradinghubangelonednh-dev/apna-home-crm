@@ -1,6 +1,5 @@
 import { ArrowLeftRight, BellDot, IndianRupee, Wallet } from 'lucide-react';
 
-import { Button } from '../shared/Button';
 import { Card } from '../shared/Card';
 import { EmptyState } from '../shared/EmptyState';
 import { StatCard } from '../shared/StatCard';
@@ -8,11 +7,7 @@ import { formatCurrency, formatDate, initials } from '../../lib/format';
 
 export function OverviewSection({
   dashboard,
-  selectedMonth,
-  onMonthChange,
-  onPrepareSettlement,
-  onExportCsv,
-  onExportPdf
+  onPrepareSettlement
 }) {
   const { summary, analytics, recentExpenses } = dashboard;
 
@@ -36,31 +31,6 @@ export function OverviewSection({
           </p>
         </div>
 
-        <div className="flex flex-col gap-3 sm:flex-row">
-
-          <input
-            className="px-4 py-3 rounded-xl border border-gray-200 bg-white text-[#111827] font-medium"
-            type="month"
-            value={selectedMonth}
-            onChange={(e) => onMonthChange(e.target.value)}
-          />
-
-          <Button
-            variant="secondary"
-            className="bg-gray-100 text-[#111827] font-semibold"
-            onClick={onExportCsv}
-          >
-            Export CSV
-          </Button>
-
-          <Button
-            className="bg-emerald-500 text-white hover:bg-emerald-600 font-semibold"
-            onClick={onExportPdf}
-          >
-            Export PDF
-          </Button>
-
-        </div>
       </div>
 
       {/* STATS */}
@@ -227,13 +197,12 @@ export function OverviewSection({
                       {formatCurrency(transaction.amount)}
                     </span>
 
-                    <Button
-                      size="sm"
-                      className="bg-gray-900 text-white font-semibold"
+                    <button
+                      className="px-4 py-2 rounded-xl bg-gray-900 text-white font-semibold"
                       onClick={() => onPrepareSettlement(transaction)}
                     >
                       Create Settlement
-                    </Button>
+                    </button>
 
                   </div>
 

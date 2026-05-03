@@ -2,6 +2,7 @@ import { useState } from 'react';
 import {
   Bell,
   CircleDollarSign,
+  FileText,
   Home,
   LogOut,
   Menu,
@@ -21,6 +22,10 @@ const navigation = [
   { id: 'settlements', label: 'Settlements', icon: RefreshCcw },
   { id: 'recurring', label: 'Recurring', icon: Repeat },
   { id: 'analytics', label: 'Analytics', icon: PieChart },
+
+  // NEW REPORTS TAB
+  { id: 'reports', label: 'Reports', icon: FileText },
+
   { id: 'notifications', label: 'Notifications', icon: Bell },
   { id: 'members', label: 'Members', icon: Users },
   { id: 'audit', label: 'Audit', icon: ShieldCheck, adminOnly: true }
