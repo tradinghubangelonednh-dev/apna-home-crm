@@ -20,10 +20,7 @@ const navigation = [
   { id: 'expenses', label: 'Expenses', icon: CircleDollarSign },
   { id: 'settlements', label: 'Settlements', icon: RefreshCcw },
   { id: 'recurring', label: 'Recurring', icon: Repeat },
-
-  // NEW ANALYTICS MENU
   { id: 'analytics', label: 'Analytics', icon: PieChart },
-
   { id: 'notifications', label: 'Notifications', icon: Bell },
   { id: 'members', label: 'Members', icon: Users },
   { id: 'audit', label: 'Audit', icon: ShieldCheck, adminOnly: true }
@@ -49,29 +46,29 @@ export function AppShell({
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-[#F9FAFB] text-[#111827]">
 
       {/* TOP BAR */}
       <div
         className="sticky top-0 z-50 flex items-center justify-between px-4 py-3
-        bg-[#0B1220] border-b border-white/5 text-white"
+        bg-[#0B1220] border-b border-[#1F2937]"
       >
-        <h1 className="font-bold text-lg tracking-wide">
+        <h1 className="font-bold text-lg tracking-wide text-white opacity-100">
           Household
         </h1>
 
         <button
           onClick={() => setIsOpen(true)}
-          className="p-2 rounded-xl hover:bg-white/5 transition"
+          className="p-2 rounded-xl hover:bg-[#1F2937] transition"
         >
-          <Menu className="h-6 w-6 text-white" />
+          <Menu className="h-6 w-6 text-white opacity-100" />
         </button>
       </div>
 
       {/* OVERLAY */}
       {isOpen && (
         <div
-          className="fixed inset-0 z-40 bg-black/60"
+          className="fixed inset-0 z-40 bg-black/70"
           onClick={() => setIsOpen(false)}
         />
       )}
@@ -79,13 +76,13 @@ export function AppShell({
       {/* SIDEBAR */}
       <aside
         className={`fixed left-0 top-0 z-50 h-full w-72
-        bg-[#0B1220] border-r border-white/5
+        bg-[#0B1220] border-r border-[#1F2937]
         shadow-2xl transition-transform duration-300
         ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}
       >
 
         {/* USER HEADER */}
-        <div className="flex items-center justify-between p-5 border-b border-white/5">
+        <div className="flex items-center justify-between p-5 border-b border-[#1F2937]">
 
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl font-bold text-white bg-teal-500">
@@ -93,14 +90,19 @@ export function AppShell({
             </div>
 
             <div>
-              <p className="font-semibold text-white">{user.name}</p>
-              <p className="text-xs text-gray-400">{user.role}</p>
+              <p className="font-semibold text-white opacity-100">
+                {user.name}
+              </p>
+
+              <p className="text-xs text-gray-300 opacity-100">
+                {user.role}
+              </p>
             </div>
           </div>
 
           <button
             onClick={() => setIsOpen(false)}
-            className="text-white/60 hover:text-white text-xl"
+            className="text-white hover:text-white text-xl opacity-100"
           >
             ✕
           </button>
@@ -117,19 +119,21 @@ export function AppShell({
               <button
                 key={item.id}
                 onClick={() => handleTabChange(item.id)}
-                className={`flex w-full items-center gap-3 px-4 py-3 rounded-xl transition
+                className={`flex w-full items-center gap-3 px-4 py-3 rounded-xl transition text-sm font-medium
                 ${
                   isActive
-                    ? 'bg-teal-500/15 text-white border-l-4 border-teal-500'
-                    : 'text-gray-400 hover:bg-white/5 hover:text-white'
+                    ? 'bg-teal-500 text-white border-l-4 border-white'
+                    : 'text-gray-200 hover:bg-[#111827] hover:text-white'
                 }`}
               >
-                <Icon className="h-4 w-4" />
+                <Icon className="h-4 w-4 opacity-100" />
 
-                {item.label}
+                <span className="opacity-100">
+                  {item.label}
+                </span>
 
                 {item.id === 'notifications' && unreadCount ? (
-                  <span className="ml-auto rounded-full bg-red-500 px-2 py-0.5 text-xs text-white">
+                  <span className="ml-auto rounded-full bg-red-500 px-2 py-0.5 text-xs font-semibold text-white opacity-100">
                     {unreadCount}
                   </span>
                 ) : null}
@@ -141,7 +145,7 @@ export function AppShell({
         {/* LOGOUT */}
         <div className="absolute bottom-5 left-5 right-5">
           <Button
-            className="w-full"
+            className="w-full opacity-100"
             variant="secondary"
             onClick={onLogout}
           >
@@ -152,7 +156,7 @@ export function AppShell({
       </aside>
 
       {/* MAIN CONTENT */}
-      <main className="flex-1 bg-[#F9FAFB] text-[#111827] p-4 ml-0 md:ml-72">
+      <main className="flex-1 bg-[#F9FAFB] text-[#111827] p-4 ml-0 md:ml-72 opacity-100">
         {children}
       </main>
 
