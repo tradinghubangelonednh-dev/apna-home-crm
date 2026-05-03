@@ -53,7 +53,7 @@ export function AppShell({
         className="sticky top-0 z-50 flex items-center justify-between px-4 py-3
         bg-[#0B1220] border-b border-[#1F2937]"
       >
-        <h1 className="font-bold text-lg tracking-wide text-white opacity-100">
+        <h1 className="font-bold text-lg tracking-wide text-white">
           Household
         </h1>
 
@@ -61,7 +61,7 @@ export function AppShell({
           onClick={() => setIsOpen(true)}
           className="p-2 rounded-xl hover:bg-[#1F2937] transition"
         >
-          <Menu className="h-6 w-6 text-white opacity-100" />
+          <Menu className="h-6 w-6 text-white" />
         </button>
       </div>
 
@@ -90,11 +90,11 @@ export function AppShell({
             </div>
 
             <div>
-              <p className="font-semibold text-white opacity-100">
+              <p className="font-semibold text-white">
                 {user.name}
               </p>
 
-              <p className="text-xs text-gray-300 opacity-100">
+              <p className="text-xs text-gray-300">
                 {user.role}
               </p>
             </div>
@@ -102,7 +102,7 @@ export function AppShell({
 
           <button
             onClick={() => setIsOpen(false)}
-            className="text-white hover:text-white text-xl opacity-100"
+            className="text-white hover:text-white text-xl"
           >
             ✕
           </button>
@@ -122,18 +122,18 @@ export function AppShell({
                 className={`flex w-full items-center gap-3 px-4 py-3 rounded-xl transition text-sm font-medium
                 ${
                   isActive
-                    ? 'bg-teal-500 text-white border-l-4 border-white'
-                    : 'text-gray-200 hover:bg-[#111827] hover:text-white'
+                    ? 'bg-teal-500 text-white shadow-lg shadow-teal-500/20'
+                    : 'text-gray-300 hover:bg-[#111827] hover:text-white'
                 }`}
               >
-                <Icon className="h-4 w-4 opacity-100" />
+                <Icon className="h-4 w-4" />
 
-                <span className="opacity-100">
+                <span>
                   {item.label}
                 </span>
 
                 {item.id === 'notifications' && unreadCount ? (
-                  <span className="ml-auto rounded-full bg-red-500 px-2 py-0.5 text-xs font-semibold text-white opacity-100">
+                  <span className="ml-auto rounded-full bg-red-500 px-2 py-0.5 text-xs font-semibold text-white">
                     {unreadCount}
                   </span>
                 ) : null}
@@ -145,7 +145,7 @@ export function AppShell({
         {/* LOGOUT */}
         <div className="absolute bottom-5 left-5 right-5">
           <Button
-            className="w-full opacity-100"
+            className="w-full"
             variant="secondary"
             onClick={onLogout}
           >
@@ -156,7 +156,7 @@ export function AppShell({
       </aside>
 
       {/* MAIN CONTENT */}
-      <main className="flex-1 bg-[#F9FAFB] text-[#111827] p-4 ml-0 md:ml-72 opacity-100">
+      <main className="flex-1 bg-[#F9FAFB] text-[#111827] p-4 ml-0 md:ml-72">
         {children}
       </main>
 
