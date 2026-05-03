@@ -4,20 +4,23 @@
 @tailwind components;
 @tailwind utilities;
 
+/* =========================
+   BASE THEME (FIXED)
+========================= */
 @layer base {
   :root {
-    color: #F8FAFC;
-    background: #0F172A;
-  }
-
-  * {
-    @apply border-transparent;
+    color: #FFFFFF;
+    background: #0B1220;
   }
 
   body {
     @apply min-h-screen font-body antialiased;
-    background-color: #0F172A;
-    color: #F8FAFC;
+    background: linear-gradient(180deg, #0B1220 0%, #0F172A 100%);
+    color: #FFFFFF;
+  }
+
+  * {
+    border-color: rgba(255,255,255,0.05);
   }
 
   button,
@@ -28,28 +31,53 @@
   }
 }
 
+/* =========================
+   PREMIUM COMPONENT SYSTEM
+========================= */
 @layer components {
+
+  /* MAIN CARD (FIXED + PREMIUM) */
   .app-panel {
     background: #111827;
-    border: 1px solid #334155;
-    border-radius: 28px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
   }
 
+  /* INPUT FIELD */
   .field {
-    @apply w-full rounded-2xl px-4 py-3 text-sm outline-none transition;
-    background: #1E293B;
-    border: 1px solid #334155;
-    color: #F8FAFC;
+    @apply w-full rounded-xl px-4 py-3 text-sm outline-none transition;
+    background: #111827;
+    border: 1px solid rgba(255,255,255,0.05);
+    color: #FFFFFF;
   }
 
   .field:focus {
     border-color: #14B8A6;
-    box-shadow: 0 0 0 2px rgba(20,184,166,0.2);
+    box-shadow: 0 0 0 2px rgba(20,184,166,0.15);
   }
 
+  /* LABEL */
   .label {
     @apply mb-2 block text-xs font-semibold uppercase tracking-[0.18em];
-    color: #94A3B8;
+    color: #9CA3AF;
+  }
+
+  /* SIDEBAR ACTIVE ITEM (NEW ADDITION) */
+  .sidebar-active {
+    background: rgba(20,184,166,0.15);
+    border-left: 3px solid #14B8A6;
+    color: #FFFFFF;
+  }
+
+  /* SIDEBAR ITEM */
+  .sidebar-item {
+    @apply flex items-center gap-3 px-3 py-2 rounded-lg transition;
+    color: #9CA3AF;
+  }
+
+  .sidebar-item:hover {
+    background: rgba(255,255,255,0.05);
+    color: #FFFFFF;
   }
 }

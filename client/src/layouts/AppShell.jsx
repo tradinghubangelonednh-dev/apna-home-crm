@@ -44,18 +44,19 @@ export function AppShell({
   };
 
   return (
-    <div className="min-h-screen bg-app-sand">
+    <div className="min-h-screen bg-[#0B1220] text-white">
 
       {/* TOP BAR */}
-      <div className="sticky top-0 z-50 flex items-center justify-between px-4 py-3 shadow-lg bg-gradient-to-r from-[#0b1220] via-[#0f172a] to-[#111c33] text-white">
+      <div className="sticky top-0 z-50 flex items-center justify-between px-4 py-3
+        bg-[#0B1220] border-b border-white/5">
 
-        <h1 className="font-display text-xl font-bold tracking-wide">
+        <h1 className="font-bold text-lg tracking-wide">
           Household
         </h1>
 
         <button
           onClick={() => setIsOpen(true)}
-          className="rounded-xl p-2 hover:bg-white/10 transition"
+          className="p-2 rounded-xl hover:bg-white/5 transition"
         >
           <Menu className="h-6 w-6 text-white" />
         </button>
@@ -64,45 +65,45 @@ export function AppShell({
       {/* OVERLAY */}
       {isOpen && (
         <div
-          className="fixed inset-0 z-40 bg-black/50"
+          className="fixed inset-0 z-40 bg-black/60"
           onClick={() => setIsOpen(false)}
         />
       )}
 
       {/* SIDEBAR */}
       <aside
-        className={`fixed left-0 top-0 z-50 h-full w-[78%] max-w-sm bg-white p-5 shadow-2xl transition-transform duration-300 ${
-          isOpen ? 'translate-x-0' : '-translate-x-full'
-        }`}
+        className={`fixed left-0 top-0 z-50 h-full w-72
+        bg-[#0B1220] border-r border-white/5
+        shadow-2xl transition-transform duration-300
+        ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}
       >
 
         {/* USER HEADER */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between p-5 border-b border-white/5">
 
           <div className="flex items-center gap-3">
             <div
-              className="flex h-10 w-10 items-center justify-center rounded-xl font-bold text-white"
-              style={{ backgroundColor: user.avatarColor }}
+              className="flex h-10 w-10 items-center justify-center rounded-xl font-bold text-white bg-teal-500"
             >
               {initials(user.name)}
             </div>
 
             <div>
-              <p className="font-semibold">{user.name}</p>
-              <p className="text-xs text-gray-500">{user.role}</p>
+              <p className="font-semibold text-white">{user.name}</p>
+              <p className="text-xs text-gray-400">{user.role}</p>
             </div>
           </div>
 
           <button
             onClick={() => setIsOpen(false)}
-            className="text-2xl text-gray-500 hover:text-black"
+            className="text-white/60 hover:text-white text-xl"
           >
             ✕
           </button>
         </div>
 
         {/* NAVIGATION */}
-        <nav className="mt-6 space-y-2">
+        <nav className="mt-4 space-y-1 px-3">
 
           {filteredNav.map((item) => {
             const Icon = item.icon;
@@ -112,10 +113,11 @@ export function AppShell({
               <button
                 key={item.id}
                 onClick={() => handleTabChange(item.id)}
-                className={`flex w-full items-center gap-3 rounded-xl px-4 py-3 text-left text-sm font-medium transition ${
+                className={`flex w-full items-center gap-3 px-4 py-3 rounded-xl transition
+                ${
                   isActive
-                    ? 'bg-[#0f172a] text-white'
-                    : 'text-gray-700 hover:bg-gray-100'
+                    ? 'bg-teal-500/15 text-white border-l-4 border-teal-500'
+                    : 'text-gray-400 hover:bg-white/5 hover:text-white'
                 }`}
               >
                 <Icon className="h-4 w-4" />
