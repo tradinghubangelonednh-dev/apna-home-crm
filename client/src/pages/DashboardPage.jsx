@@ -12,11 +12,7 @@ import { RecurringSection } from '../components/recurring/RecurringSection';
 import { NotificationsPanel } from '../components/notifications/NotificationsPanel';
 import { MembersPanel } from '../components/household/MembersPanel';
 import { AuditLogPanel } from '../components/household/AuditLogPanel';
-
-// NEW IMPORT
 import { AnalyticsPage } from './AnalyticsPage';
-
-// ✅ NEW IMPORT (ADDED ONLY THIS)
 import { ReportsSection } from '../components/analytics/ReportsSection';
 
 const initialFilters = {
@@ -247,10 +243,14 @@ export function DashboardPage() {
             downloadFile(`/export/expenses.csv${buildQuery(filters)}`, token, 'apna-home-expenses.csv')
           }
           onExportPdf={() =>
-            downloadFile(`/export/dashboard.pdf${buildQuery({
-              month: parsedMonth.month,
-              year: parsedMonth.year
-            })}`, token, 'apna-home-dashboard.pdf')
+            downloadFile(
+              `/export/dashboard.pdf${buildQuery({
+                month: parsedMonth.month,
+                year: parsedMonth.year
+              })}`,
+              token,
+              'apna-home-dashboard.pdf'
+            )
           }
           onMonthChange={setSelectedMonth}
           onPrepareSettlement={(s) => prepareSuggestion(s, true)}
@@ -258,7 +258,6 @@ export function DashboardPage() {
         />
       ) : null}
 
-      {/* REPORTS SECTION (ADDED ONLY THIS) */}
       {activeTab === 'reports' ? (
         <ReportsSection
           selectedMonth={selectedMonth}
@@ -283,43 +282,123 @@ export function DashboardPage() {
         />
       ) : null}
 
-      {/* rest unchanged */}
       {activeTab === 'expenses' ? (
-        <ExpensesSection {...{
-          busy, expenses, filters, members,
-          onCreateExpense: (p) => runAction(() => apiRequest('/expenses', { method: 'POST', token, body: p }), 'Expense added'),
-          onDeleteExpense: (id) => runAction(() => apiRequest(`/expenses/${id}`, { method: 'DELETE', token }), 'Expense deleted'),
-          onFiltersChange: setFilters,
-          onUpdateExpense: (id, p) => runAction(() => apiRequest(`/expenses/${id}`, { method: 'PUT', token, body: p }), 'Expense updated')
-        }} />
+        <ExpensesSection
+          busy={busy}
+          expenses={expenses}
+          filters={filters}
+          members={members}
+          onCreateExpense={(p) =>
+            runAction(
+              () => apiRequest('/expenses', { method: 'POST', token, body: p }),
+              'Expense added'
+            )
+          }
+          onDeleteExpense={(id) =>
+            runAction(
+              () => apiRequest(`/expenses/${id}`, { method: 'DELETE', token }),
+              'Expense deleted'
+            )
+          }
+          onFiltersChange={setFilters}
+          onUpdateExpense={(id, p) =>
+            runAction(
+              () => apiRequest(`/expenses/${id}`, { method: 'PUT', token, body: p }),
+              'Expense updated'
+            )
+          }
+        />
       ) : null}
 
       {activeTab === 'settlements' ? (
-        <SettlementsSection {...{
-          busy, members,
-          settlements,
-          pendingSuggestions: dashboard.analytics.simplifiedTransactions,
-          preparedSuggestion,
-          onPrepareSuggestion: prepareSuggestion,
-          onCreateSettlement: (p) => runAction(() => apiRequest('/settlements', { method: 'POST', token, body: p }), 'Settlement created'),
-          onCompleteSettlement: (id) => runAction(() => apiRequest(`/settlements/${id}/complete`, { method: 'PATCH', token }), 'Completed'),
-          onSendReminder: (id) => runAction(() => apiRequest(`/settlements/${id}/remind`, { method: 'POST', token }), 'Reminder sent')
-        }} />
+        <SettlementsSection
+          busy={busy}
+          members={members}
+          settlements={settlements}
+          pendingSuggestions={dashboard.analytics.simplifiedTransactions}
+          preparedSuggestion={preparedSuggestion}
+          onPrepareSuggestion={prepareSuggestion}
+          onCreateSettlement={(p) =>
+            runAction(
+              () => apiRequest('/settlements', { method: 'POST', token, body: p }),
+              'Settlement created'
+            )
+          }
+          onCompleteSettlement={(id) =>
+            runAction(
+              () => apiRequest(`/settlements/${id}/complete`, { method: 'PATCH', token }),
+              'Completed'
+            )
+          }
+          onSendReminder={(id) =>
+            runAction(
+              () => apiRequest(`/settlements/${id}/remind`, { method: 'POST', token }),
+              'Reminder sent'
+            )
+          }
+        />
       ) : null}
 
       {activeTab === 'recurring' ? (
-        <RecurringSection {...{
-          busy, members, recurringExpenses,
-          onCreateRecurringExpense: (p) => runAction(() => apiRequest('/recurring', { method: 'POST', token, body: p }), 'Created'),
-          onRunRecurringExpenses: () => runAction(() => apiRequest('/recurring/run', { method: 'POST', token }), 'Processed'),
-          onToggleRecurringExpense: (id) => runAction(() => apiRequest(`/recurring/${id}/toggle`, { method: 'PATCH', token }), 'Updated'),
-          onUpdateRecurringExpense: (id, p) => runAction(() => apiRequest(`/recurring/${id}`, { method: 'PUT', token, body: p }), 'Updated')
-        }} />
+        <RecurringSection
+          busy={busy}
+          members={members}
+          recurringExpenses={recurringExpenses}
+          onCreateRecurringExpense={(p) =>
+            runAction(
+              () => apiRequest('/recurring', { method: 'POST', token, body: p }),
+              'Created'
+            )
+          }
+          onRunRecurringExpenses={() =>
+            runAction(
+              () => apiRequest('/recurring/run', { method: 'POST', token }),
+              'Processed'
+            )
+          }
+          onToggleRecurringExpense={(id) =>
+            runAction(
+              () => apiRequest(`/recurring/${id}/toggle`, { method: 'PATCH', token }),
+              'Updated'
+            )
+          }
+          onUpdateRecurringExpense={(id, p) =>
+            runAction(
+              () => apiRequest(`/recurring/${id}`, { method: 'PUT', token, body: p }),
+              'Updated'
+            )
+          }
+        />
       ) : null}
 
       {activeTab === 'analytics' ? <AnalyticsPage /> : null}
-      {activeTab === 'notifications' ? <NotificationsPanel notifications={notifications} /> : null}
-      {activeTab === 'members' ? <MembersPanel {...{ busy, household, user }} /> : null}
+
+      {activeTab === 'notifications' ? (
+        <NotificationsPanel
+          notifications={notifications}
+          onMarkRead={(id) =>
+            runAction(
+              () => apiRequest(`/notifications/${id}/read`, { method: 'PATCH', token }),
+              'Notification marked as read'
+            )
+          }
+          onMarkAllRead={() =>
+            runAction(
+              () => apiRequest('/notifications/read-all', { method: 'PATCH', token }),
+              'All notifications marked as read'
+            )
+          }
+        />
+      ) : null}
+
+      {activeTab === 'members' ? (
+        <MembersPanel
+          busy={busy}
+          household={household}
+          currentUser={user}
+        />
+      ) : null}
+
       {activeTab === 'audit' ? <AuditLogPanel auditLogs={auditLogs} /> : null}
     </AppShell>
   );
