@@ -224,7 +224,182 @@ export function DashboardPage() {
       unreadCount={unreadCount}
       user={user}
     >
+      {feedback ? (
+        <div
+          className={`app-panel px-5 py-4 text-sm ${
+            feedback.type === 'error'
+              ? 'border-app-coral/40 bg-app-coral/10 text-app-coral'
+              : 'border-app-mint/40 bg-app-mint/12 text-app-teal'
+          }`}
+        >
+          {feedback.message}
+        </div>
+      ) : null}
+
+      {activeTab === 'overview' ? (
+        <OverviewSection
+          dashboard={dashboard}
+          onExportCsv={() =>
+            downloadFile(`/export/expenses.csv${buildQuery(filters)}`, token, 'apna-home-expenses.csv')
+          }
+          onExportPdf={() =>
+            downloadFile(
+              `/export/dashboard.pdf${buildQuery({
+                month: parsedMonth.month,
+                year: parsedMonth.year
+              })}`,
+              token,
+              'apna-home-dashboard.pdf'
+            )
+          }
+          onMonthChange={setSelectedMonth}
+          onPrepareSettlement={(s) => prepareSuggestion(s, true)}
+          selectedMonth={selectedMonth}
+        />
+      ) : null}
+
+      {activeTab === 'reports' ? (
+        <ReportsSection
+          selectedMonth={selectedMonth}
+          onMonthChange={setSelectedMonth}
+          onExportCsv={() =>
+            downloadFile(
+              `/export/expenses.csv${buildQuery(filters)}`,
+              token,
+              'apna-home-expenses.csv'
+            )
+          }
+          onExportPdf={() =>
+            downloadFile(
+              `/export/dashboard.pdf${buildQuery({
+                month: parsedMonth.month,
+                year: parsedMonth.year
+              })}`,
+              token,
+              'apna-home-dashboard.pdf'
+            )
+          }
+        />
+      ) : null}
+
+      {activeTab === 'expenses' ? (
+        <ExpensesSection
+          busy={busy}
+          expenses={expenses}
+          filters={filters}
+          members={members}
+          onCreateExpense={(p) =>
+            runAction(
+              () => apiRequest('/expenses', { method: 'POST', token, body: p }),
+              'Expense added'
+            )
+          }
+          onDeleteExpense={(id) =>
+            runAction(
+              () => apiRequest(`/expenses/${id}`, { method: 'DELETE', token }),
+              'Expense deleted'
+            )
+          }
+          onFiltersChange={setFilters}
+          onUpdateExpense={(id, p) =>
+            runAction(
+              () => apiRequest(`/expenses/${id}`, { method: 'PUT', token, body: p }),
+              'Expense updated'
+            )
+          }
+        />
+      ) : null}
+
+      {activeTab === 'settlements' ? (
+        <SettlementsSection
+          busy={busy}
+          members={members}
+          settlements={settlements}
+          pendingSuggestions={dashboard.analytics.simplifiedTransactions}
+          preparedSuggestion={preparedSuggestion}
+          onPrepareSuggestion={prepareSuggestion}
+          onCreateSettlement={(p) =>
+            runAction(
+              () => apiRequest('/settlements', { method: 'POST', token, body: p }),
+              'Settlement created'
+            )
+          }
+          onCompleteSettlement={(id) =>
+            runAction(
+              () => apiRequest(`/settlements/${id}/complete`, { method: 'PATCH', token }),
+              'Completed'
+            )
+          }
+          onSendReminder={(id) =>
+            runAction(
+              () => apiRequest(`/settlements/${id}/remind`, { method: 'POST', token }),
+              'Reminder sent'
+            )
+          }
+        />
+      ) : null}
+
+      {activeTab === 'recurring' ? (
+        <RecurringSection
+          busy={busy}
+          members={members}
+          recurringExpenses={recurringExpenses}
+          onCreateRecurringExpense={(p) =>
+            runAction(
+              () => apiRequest('/recurring', { method: 'POST', token, body: p }),
+              'Created'
+            )
+          }
+          onRunRecurringExpenses={() =>
+            runAction(
+              () => apiRequest('/recurring/run', { method: 'POST', token }),
+              'Processed'
+            )
+          }
+          onToggleRecurringExpense={(id) =>
+            runAction(
+              () => apiRequest(`/recurring/${id}/toggle`, { method: 'PATCH', token }),
+              'Updated'
+            )
+          }
+          onUpdateRecurringExpense={(id, p) =>
+            runAction(
+              () => apiRequest(`/recurring/${id}`, { method: 'PUT', token, body: p }),
+              'Updated'
+            )
+          }
+        />
+      ) : null}
+
       {activeTab === 'analytics' ? <AnalyticsPage dashboard={dashboard} /> : null}
+
+      {activeTab === 'notifications' ? (
+        <NotificationsPanel
+          notifications={notifications}
+          onMarkRead={(id) =>
+            runAction(
+              () => apiRequest(`/notifications/${id}/read`, { method: 'PATCH', token }),
+              'Notification marked as read'
+            )
+          }
+          onMarkAllRead={() =>
+            runAction(
+              () => apiRequest('/notifications/read-all', { method: 'PATCH', token }),
+              'All notifications marked as read'
+            )
+          }
+        />
+      ) : null}
+
+      {activeTab === 'members' ? (
+        <MembersPanel
+          busy={busy}
+          household={household}
+          currentUser={user}
+        />
+      ) : null}
+
+      {activeTab === 'audit' ? <AuditLogPanel auditLogs={auditLogs} /> : null}
     </AppShell>
   );
 }
