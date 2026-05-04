@@ -3,14 +3,12 @@ import { Card } from '../components/shared/Card';
 import { MonthlyTrendChart } from '../components/analytics/MonthlyTrendChart';
 import { CategoryBreakdownChart } from '../components/analytics/CategoryBreakdownChart';
 
-const monthlyTrend = [];
+export function AnalyticsPage({ dashboard }) {
+  const monthlyTrend = dashboard?.analytics?.monthlyTrend || [];
+  const categoryBreakdown = dashboard?.analytics?.categoryBreakdown || [];
 
-const categoryBreakdown = [];
-
-export function AnalyticsPage() {
   return (
     <div className="p-6 bg-gray-50 min-h-screen space-y-6">
-
       {/* HEADER */}
       <div>
         <h1 className="text-3xl font-bold text-gray-900">
@@ -24,31 +22,24 @@ export function AnalyticsPage() {
 
       {/* GRID */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-
         {/* EXPENSE TREND */}
         <Card className="p-6 rounded-2xl shadow-sm border border-gray-100 bg-white">
-
           <h2 className="text-lg font-semibold text-gray-900 mb-4">
             Expense Trend (Last 6 months)
           </h2>
 
           <MonthlyTrendChart data={monthlyTrend} />
-
         </Card>
 
         {/* CATEGORY SPLIT */}
         <Card className="p-6 rounded-2xl shadow-sm border border-gray-100 bg-white">
-
           <h2 className="text-lg font-semibold text-gray-900 mb-4">
             Category Breakdown
           </h2>
 
           <CategoryBreakdownChart data={categoryBreakdown} />
-
         </Card>
-
       </div>
-
     </div>
   );
 }
