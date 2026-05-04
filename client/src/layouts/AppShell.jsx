@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import {
   Bell,
+  Building2,
   CircleDollarSign,
   FileText,
   Home,
@@ -22,10 +23,7 @@ const navigation = [
   { id: 'settlements', label: 'Settlements', icon: RefreshCcw },
   { id: 'recurring', label: 'Recurring', icon: Repeat },
   { id: 'analytics', label: 'Analytics', icon: PieChart },
-
-  // NEW REPORTS TAB
   { id: 'reports', label: 'Reports', icon: FileText },
-
   { id: 'notifications', label: 'Notifications', icon: Bell },
   { id: 'members', label: 'Members', icon: Users },
   { id: 'audit', label: 'Audit', icon: ShieldCheck, adminOnly: true }
@@ -42,7 +40,7 @@ export function AppShell({
   const [isOpen, setIsOpen] = useState(false);
 
   const filteredNav = navigation.filter(
-    (item) => !item.adminOnly || user.role === 'admin'
+    (item) => !item.adminOnly || user?.role === 'admin'
   );
 
   const handleTabChange = (id) => {
@@ -58,9 +56,15 @@ export function AppShell({
         className="sticky top-0 z-50 flex items-center justify-between px-4 py-3
         bg-[#0B1220] border-b border-[#1F2937]"
       >
-        <h1 className="font-bold text-lg tracking-wide text-white">
-          Household
-        </h1>
+        <div className="flex items-center gap-3">
+          <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-teal-500/15 text-teal-400 shadow-lg shadow-teal-500/20 ring-1 ring-teal-400/25">
+            <Building2 className="h-5 w-5" />
+          </div>
+
+          <h1 className="font-bold text-lg tracking-wide text-white">
+            Household
+          </h1>
+        </div>
 
         <button
           onClick={() => setIsOpen(true)}
@@ -91,16 +95,16 @@ export function AppShell({
 
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl font-bold text-white bg-teal-500">
-              {initials(user.name)}
+              {initials(user?.name || 'User')}
             </div>
 
             <div>
               <p className="font-semibold text-white">
-                {user.name}
+                {user?.name || 'User'}
               </p>
 
               <p className="text-xs text-gray-300">
-                {user.role}
+                {user?.role || 'member'}
               </p>
             </div>
           </div>
