@@ -8,6 +8,7 @@ import {
   LogOut,
   Menu,
   PieChart,
+  Receipt,
   RefreshCcw,
   Repeat,
   ShieldCheck,
@@ -20,6 +21,10 @@ import { initials } from '../lib/format';
 const navigation = [
   { id: 'overview', label: 'Overview', icon: Home },
   { id: 'expenses', label: 'Expenses', icon: CircleDollarSign },
+
+  // NEW STATEMENT TAB
+  { id: 'statement', label: 'Statement', icon: Receipt },
+
   { id: 'settlements', label: 'Settlements', icon: RefreshCcw },
   { id: 'recurring', label: 'Recurring', icon: Repeat },
   { id: 'analytics', label: 'Analytics', icon: PieChart },

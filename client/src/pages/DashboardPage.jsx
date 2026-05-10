@@ -14,6 +14,7 @@ import { MembersPanel } from '../components/household/MembersPanel';
 import { AuditLogPanel } from '../components/household/AuditLogPanel';
 import { AnalyticsPage } from './AnalyticsPage';
 import { ReportsSection } from '../components/analytics/ReportsSection';
+import { StatementPage } from './StatementPage';
 
 const initialFilters = {
   search: '',
@@ -280,6 +281,10 @@ export function DashboardPage() {
             )
           }
         />
+      ) : null}
+
+      {activeTab === 'statement' ? (
+        <StatementPage expenses={expenses} />
       ) : null}
 
       {activeTab === 'expenses' ? (
